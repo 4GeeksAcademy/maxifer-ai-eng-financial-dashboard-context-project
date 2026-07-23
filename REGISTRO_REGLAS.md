@@ -1,6 +1,6 @@
-# Reglas Del Proyecto
+# Registro De Reglas Propuestas
 
-Este documento define reglas accionables para preservar los patrones utiles detectados en el proyecto y mitigar riesgos de arquitectura, seguridad, testing, DX, documentacion y contratos API.
+Este documento queda como registro informativo del paso de definicion de reglas. Las reglas operativas activas viven en `./.agents/rules`.
 
 ## Arquitectura
 
