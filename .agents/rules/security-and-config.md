@@ -1,19 +1,28 @@
-# Seguridad Y Configuracion
+---
+title: "Separar Configuracion Segura Por Entorno"
+description: "Evitar CORS inseguro, secretos hardcodeados y herramientas de debug en configuraciones productivas."
+globs:
+  - "backend/app/main.py"
+  - "backend/**/*.py"
+  - "backend/Dockerfile"
+  - "frontend/Dockerfile"
+  - "docker-compose.yml"
+  - "backend/.env.example"
+  - "frontend/.env.example"
+  - "README.md"
+  - "README.es.md"
+applicationType: autoAttached
+content: |
+  Usa CORS abierto solo en configuracion local de desarrollo.
 
-## Nombre
-Configuracion explicita y segura por entorno.
+  No combines allow_origins=["*"] con allow_credentials=True. Si se necesitan credenciales, usa origenes explicitos.
 
-## Alcance
-Aplica a `backend/app/main.py`, `backend/Dockerfile`, `frontend/Dockerfile`, `docker-compose.yml`, variables de entorno, scripts de ejecucion y diferencias entre desarrollo y produccion.
+  Lee origenes permitidos desde una variable de entorno cuando el backend se prepare para produccion.
 
-## Razon
-Separar desarrollo de produccion reduce el riesgo de exponer debugging, CORS abierto, secretos o flags inseguros en entornos reales.
+  Mantiene debugpy, --reload y el puerto 5678 fuera de imagenes o comandos productivos.
 
-## Reglas
-- CORS abierto solo puede existir en configuracion local de desarrollo.
-- No combinar `allow_origins=["*"]` con `allow_credentials=True`; si se necesitan credenciales, usar origenes explicitos.
-- Leer origenes permitidos desde variable de entorno cuando el backend se prepare para produccion.
-- Mantener `debugpy`, `--reload` y el puerto `5678` fuera de imagenes o comandos productivos.
-- Si Docker se usa para desarrollo, dejarlo nombrado como tal en README o separar Dockerfile/comando de produccion.
-- No hardcodear secretos, origenes externos ni flags sensibles en codigo fuente.
-- Toda variable de entorno nueva debe aparecer en un archivo `.env.example` o README con su proposito.
+  Si Docker se usa para desarrollo, nombralo como desarrollo en README o separa Dockerfile y comando de produccion.
+
+  No hardcodees secretos, origenes externos ni flags sensibles en codigo fuente.
+
+  Documenta toda variable de entorno nueva en un archivo .env.example o README con su proposito.

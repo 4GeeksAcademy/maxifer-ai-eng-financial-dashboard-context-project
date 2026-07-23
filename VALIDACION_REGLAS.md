@@ -6,6 +6,12 @@ Este documento valida si las reglas activas en `./.agents/rules` pueden guiar ta
 
 Las reglas son aplicables al proyecto y cubren superficies reales: backend FastAPI, frontend React, contratos API, testing, Docker, dependencias y documentacion. No son reglas abstractas; varias senalan problemas existentes o limites concretos que pueden orientar refactors futuros.
 
+## Revision De Formato 2026-07-23
+
+Las reglas activas en `./.agents/rules` fueron normalizadas al formato con `title`, `description`, `globs`, `applicationType` y `content`.
+
+Cada archivo mantiene un proposito principal, usa lenguaje imperativo y concreto, y define globs para activar la regla solo sobre las superficies relevantes del repositorio.
+
 ## Validacion Aplicada 2026-07-23
 
 Se aplicaron las reglas activas de `./.agents/rules` contra el estado actual del repositorio.

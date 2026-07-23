@@ -1,21 +1,25 @@
-# Frontend Y UI
+---
+title: "Separar UI, Datos Y Formateo En Frontend"
+description: "Mantener componentes React enfocados, estados remotos explicitos y formato financiero centralizado."
+globs:
+  - "frontend/src/App.tsx"
+  - "frontend/src/components/**/*.tsx"
+  - "frontend/src/lib/**/*.ts"
+  - "frontend/src/index.css"
+applicationType: autoAttached
+content: |
+  Mantiene llamadas API fuera de componentes presentacionales en frontend/src/components/dashboard.
 
-## Nombre
-Componentes enfocados, estados explicitos y formatos centralizados.
+  Mantiene transformaciones financieras en frontend/src/lib/financial-utils.ts o en helpers equivalentes, no embebidas en JSX.
 
-## Alcance
-Aplica a `frontend/src`, especialmente `App.tsx`, `components/dashboard`, `components/ui`, `lib/financial-types.ts`, `lib/financial-utils.ts` y flujos que consumen `/api/metrics`.
+  Mantiene tipos de datos financieros en frontend/src/lib/financial-types.ts.
 
-## Razon
-Un dashboard financiero debe ser consistente, facil de escanear y robusto ante datos remotos incompletos o fallidos.
+  Usa estados explicitos loading, error y empty para vistas que dependen de datos remotos.
 
-## Reglas
-- Mantener llamadas API fuera de componentes presentacionales de `components/dashboard`.
-- Mantener transformaciones financieras en `frontend/src/lib/financial-utils.ts` o helpers equivalentes, no embebidas en JSX.
-- Mantener tipos de datos financieros en `frontend/src/lib/financial-types.ts`.
-- Procurar que componentes React no superen aproximadamente 80 lineas de codigo. Si un componente supera ese umbral, evaluar extraer tooltips, estados de loading/empty, configuracion de chart o subcomponentes.
-- No aplicar el umbral de 80 lineas a tests, datos mock, CSS o archivos de configuracion.
-- Usar estados explicitos de `loading`, `error` y `empty` para vistas que dependen de datos remotos.
-- Centralizar formateadores de moneda, porcentaje y fecha.
-- Usar tokens CSS existentes para colores, radios y estados visuales antes de introducir valores arbitrarios.
-- No ocultar errores de API: mostrar un mensaje util al usuario y preservar detalle tecnico suficiente para debugging.
+  Centraliza formateadores de moneda, porcentaje y fecha.
+
+  Usa tokens CSS existentes para colores, radios y estados visuales antes de introducir valores arbitrarios.
+
+  No ocultes errores de API: muestra un mensaje util al usuario y conserva detalle tecnico suficiente para debugging.
+
+  Si un componente React supera aproximadamente 80 lineas de codigo, revisa si conviene extraer tooltips, estados de loading o empty, configuracion de charts o subcomponentes. No apliques este umbral a tests, datos mock, CSS ni archivos de configuracion.

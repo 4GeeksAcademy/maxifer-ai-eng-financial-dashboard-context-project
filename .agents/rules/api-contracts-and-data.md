@@ -1,23 +1,26 @@
-# Contratos API Y Datos
+---
+title: "Sincronizar Contratos API Y Datos Financieros"
+description: "Mantener alineados los modelos backend, tipos frontend, filtros publicos y formatos de datos usados por /api/metrics."
+globs:
+  - "backend/app/**/*.py"
+  - "backend/tests/**/*.py"
+  - "frontend/src/lib/financial-types.ts"
+  - "frontend/src/lib/mock-data.ts"
+  - "frontend/src/**/*.tsx"
+  - "README.md"
+  - "README.es.md"
+applicationType: autoAttached
+content: |
+  Cuando cambie un campo, enum, filtro, formato de fecha o significado de una metrica de /api/metrics, actualiza en la misma tarea los modelos Pydantic, los tipos TypeScript, los tests afectados y la documentacion publica correspondiente.
 
-## Nombre
-Contratos API consistentes entre backend y frontend.
+  Usa nombres snake_case en el contrato HTTP. Convierte esos nombres a etiquetas de interfaz solo en la capa de UI.
 
-## Alcance
-Aplica a endpoints bajo `/api/metrics`, modelos Pydantic de `backend/app`, tipos TypeScript de `frontend/src/lib/financial-types.ts`, filtros publicos, formatos de fecha, metricas financieras y datos mock.
+  Representa las fechas de API como strings ISO con formato YYYY-MM-DD.
 
-## Razon
-El dashboard depende de que backend y frontend compartan el mismo significado de campos, filtros y metricas. Las divergencias silenciosas generan bugs dificiles de detectar.
+  No agregues labels de periodos hardcodeados en componentes si pueden derivarse de create_date o del campo period entregado por el backend.
 
-## Reglas
-- Cuando cambie un campo, enum, filtro, formato de fecha o significado de metrica, actualizar en la misma tarea:
-  - modelos Pydantic del backend.
-  - tipos TypeScript del frontend.
-  - tests backend o frontend afectados.
-  - README si cambia el uso publico de la API o variables relacionadas.
-- Mantener los nombres de campos del contrato API en `snake_case`; transformar a nombres de UI solo fuera del contrato.
-- Mantener fechas de API como strings ISO `YYYY-MM-DD`.
-- No agregar labels de periodos hardcodeados en UI si pueden derivarse de `create_date` o de campos `period` del backend.
-- Mantener datos mock fuera de handlers nuevos. Si se toca `generate_mock_movements`, considerar moverlo a `data.py`.
-- Cubrir filtros combinados cuando haya mas de un filtro publico para el mismo endpoint.
-- Agregar validacion runtime en el frontend o generar cliente tipado si el frontend empieza a consumir mas de una respuesta API compleja ademas de `/api/metrics`.
+  Mantiene los datos mock fuera de handlers nuevos. Si modificas generate_mock_movements, evalua moverlo a data.py antes de agregar mas responsabilidades a routes.py.
+
+  Cubre filtros combinados cuando un endpoint tenga mas de un filtro publico.
+
+  Agrega validacion runtime en el frontend o genera un cliente tipado si el frontend empieza a consumir mas de una respuesta API compleja ademas de /api/metrics.
