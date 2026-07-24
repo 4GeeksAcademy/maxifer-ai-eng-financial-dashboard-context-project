@@ -39,6 +39,14 @@ Se aplicaron las reglas activas de `./.agents/rules` contra el estado actual del
 - Vite reporto un chunk de `584.26 kB` minificado; no bloquea el build, pero conviene revisar code splitting si el dashboard crece.
 - La configuracion Docker/backend parece orientada a desarrollo; si se publica como produccion, contradice las reglas de seguridad y reproducibilidad.
 
+### Hallazgos Abiertos Actuales
+
+Estos puntos son incumplimientos actuales de reglas activas. No son recomendaciones futuras; deben resolverse o documentarse explicitamente si se decide conservar el comportamiento.
+
+- **Frontend sin estado empty explicito:** `frontend/src/App.tsx` maneja `loading` y `error`, pero no muestra un estado vacio cuando `/api/metrics` responde una lista sin movimientos. Incumple la regla `Separar UI, Datos Y Formateo En Frontend`, que exige estados explicitos `loading`, `error` y `empty` para vistas que dependen de datos remotos.
+- **Rutas B2B/B2C duplicadas:** `backend/app/routes.py` expone `/api/metrics/b2b` y `/api/metrics/b2c` aunque otros endpoints ya usan el filtro `business_type`. Incumple la regla `Mantener Endpoints FastAPI Delgados`, que indica no crear rutas `/api/metrics/<segmento>` nuevas si `business_type` cubre el caso.
+- **README con mojibake:** `README.md` conserva texto corrupto como `estÃ¡n`, `espaÃ±ol` y caracteres rotos en el arbol de directorios. Incumple la regla `Mantener Documentacion Operativa Sincronizada`, que exige guardar README y documentos del proyecto como UTF-8 valido.
+
 ## Arquitectura Por Capas
 
 **Regla validada:** si.

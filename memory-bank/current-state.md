@@ -23,9 +23,12 @@
 - El backend usa `allow_origins=["*"]` junto con `allow_credentials=True` en `backend/app/main.py`.
 - El contenedor backend expone `5678` y ejecuta `debugpy` con `--reload` en `backend/Dockerfile`; esto esta orientado a desarrollo.
 - `backend/app/routes.py` concentra modelos Pydantic, generacion de datos, filtros, calculos y endpoints.
+- `backend/app/routes.py` expone rutas especificas `/api/metrics/b2b` y `/api/metrics/b2c`, aunque la regla activa de arquitectura prefiere resolver segmentos con el filtro `business_type`.
 - El frontend consume solo `/api/metrics`; los endpoints agregados del backend no estan integrados en la UI verificada.
+- `frontend/src/App.tsx` maneja estados `loading` y `error`, pero no un estado `empty` explicito cuando la API devuelve una lista vacia; esto incumple la regla activa de frontend para vistas con datos remotos.
 - El mensaje de error de carga esta en espanol mientras la UI principal esta en ingles.
-- `README.md` y `README.es.md` muestran caracteres mojibake en varias lineas inspeccionadas.
+- `README.md` muestra mojibake en texto visible y en el arbol de directorios, por lo que aun no cumple la regla de documentacion UTF-8 valida.
+- `README.es.md` debe mantenerse revisado junto con `README.md` para conservar documentacion operativa sincronizada.
 - `frontend/package-lock.json` existe, pero `frontend/Dockerfile` usa `npm install` en vez de `npm ci`.
 - `backend/requirements.txt` no fija versiones de paquetes.
 
@@ -33,15 +36,20 @@
 
 - Riesgo de inconsistencia de contrato porque el backend define modelos Pydantic y el frontend mantiene tipos TypeScript manuales equivalentes.
 - Riesgo de confusion funcional porque algunos calculos existen en backend (`summary`, `comparison`, `alerts`) mientras la UI calcula KPIs y series mensuales localmente.
+- Riesgo de comportamiento ambiguo en filtros porque conviven endpoints segmentados B2B/B2C con endpoints filtrables por `business_type`.
+- Riesgo de experiencia incompleta si `/api/metrics` devuelve una lista vacia, porque la UI no tiene estado `empty` explicito.
 - Riesgo de configuracion insegura si la configuracion actual de CORS, debugpy y reload se reutiliza fuera de desarrollo.
 - Riesgo de reproducibilidad por dependencias Python sin version fija y uso de `npm install` en Docker pese a existir lockfile.
 - Riesgo de que el periodo mostrado por la UI sea incorrecto respecto a los datos reales entregados por la API.
+- Riesgo de confusion en onboarding por caracteres mojibake visibles en `README.md`.
 
 ## Deuda tecnica
 
 - Separar responsabilidades de `backend/app/routes.py` en contratos, datos y servicios si el backend crece.
+- Reemplazar o documentar las rutas `/api/metrics/b2b` y `/api/metrics/b2c` frente al filtro `business_type`, para alinear el contrato con la regla activa de arquitectura.
 - Definir un unico duenio para agregaciones financieras que hoy existen en backend y frontend.
 - Sincronizar tipos frontend con modelos backend o agregar validacion runtime si el contrato crece.
+- Agregar estado `empty` explicito en el flujo remoto de `frontend/src/App.tsx` y cubrirlo si se modifica el consumo de API.
 - Alinear documentacion y archivos Markdown a UTF-8 valido.
 - Diferenciar explicitamente configuracion de desarrollo y produccion.
 - Cubrir estados frontend remotos con pruebas si cambia el flujo de carga de datos.
