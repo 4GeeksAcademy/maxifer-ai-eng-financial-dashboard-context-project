@@ -49,6 +49,37 @@ Si necesitas apuntar a otro backend, copia `frontend/.env.example` como `.env` y
 - Backend: http://localhost:8000
 - Documentación API: http://localhost:8000/docs
 
+## Rendimiento del frontend para despliegue
+
+La auditoría `vercel-react-best-practices` se aplica a esta SPA React + Vite, no a
+Next.js. Hay una sola página: su título y descripción están en `frontend/index.html`.
+No hay imágenes de contenido ni fuentes descargadas, por lo que `next/image` y
+`next/font` no aplican. El dashboard usa fuentes del sistema sin solicitudes externas.
+
+Los gráficos cargan en un chunk JavaScript separado mientras se muestran el
+encabezado y los KPIs. Los placeholders conservan los encabezados reales y los
+280px del área de gráficos; los KPIs conservan etiquetas y textos auxiliares para
+reducir saltos de diseño. Los errores de carga/renderizado de gráficos muestran
+una acción de recarga. El HTML aplica el tema oscuro antes de montar React.
+
+Desde `frontend`, ejecuta `npm ci`, `npm run build` y `npm run preview` para revisar
+la salida de producción. Configura el hosting para redirigir `/api` al backend o
+define `VITE_API_BASE_URL` antes del build; el proxy de desarrollo de Vite no forma
+parte del bundle productivo. Mide Lighthouse y CLS en esta preview de producción
+con la API disponible; un build correcto no equivale a una puntuación Lighthouse.
+
+## Accesibilidad
+
+El dashboard aplica la skill `accessibility`: los gráficos tienen nombres e
+instrucciones accesibles, sus tooltips anuncian valores y el foco de teclado usa
+un contorno de alto contraste. La serie de egresos usa una línea discontinua para
+no depender solo del color. Los estados de carga y error se anuncian sin mover el foco.
+
+Para comprobarlo, usa Tab y Mayús+Tab entre gráficos, las flechas izquierda/derecha
+para explorar meses y Escape para ocultar el tooltip. Repite la auditoría de
+Lighthouse Accessibility con datos cargados; una puntuación de 100 no garantiza
+conformidad WCAG ni sustituye las pruebas con lector de pantalla.
+
 ---
 
 Este y muchos otros proyectos son construidos por estudiantes como parte de los [Coding Bootcamps](https://4geeksacademy.com/) de 4Geeks Academy. Encuentra más acerca de los [cursos](https://4geeksacademy.com/es/comparar-programas) de [Ingeniería de IA](https://4geeksacademy.com/es/coding-bootcamps/ingenieria-ia), [Data Science & Machine Learning](https://4geeksacademy.com/es/coding-bootcamps/curso-datascience-machine-learning), [Ciberseguridad](https://4geeksacademy.com/es/coding-bootcamps/curso-ciberseguridad) y [Full-Stack Software Developer con IA](https://4geeksacademy.com/es/coding-bootcamps/programador-full-stack).
