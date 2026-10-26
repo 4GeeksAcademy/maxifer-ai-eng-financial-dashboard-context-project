@@ -33,7 +33,7 @@ function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
   if (!active || !payload?.length) return null
   const value = payload[0]?.value ?? 0
   return (
-    <div className="rounded-lg border border-border bg-card px-4 py-3 shadow-lg text-sm">
+    <div role="status" aria-atomic="true" className="rounded-lg border border-border bg-card px-4 py-3 shadow-lg text-sm">
       <p className="font-semibold text-foreground mb-1">{label}</p>
       <div className="flex items-center gap-2">
         <span
@@ -77,7 +77,12 @@ export function ProfitPercentChart({ data, loading }: ProfitPercentChartProps) {
           </div>
         ) : (
           <ResponsiveContainer width="100%" height={280}>
-            <LineChart data={data} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
+            <LineChart
+              data={data}
+              aria-label="Profit Margin %"
+              aria-describedby="chart-keyboard-instructions"
+              margin={{ top: 4, right: 8, left: 0, bottom: 0 }}
+            >
               <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" strokeOpacity={0.6} />
               <XAxis
                 dataKey="month"

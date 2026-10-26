@@ -48,8 +48,12 @@ function App() {
         <div className="flex flex-col gap-8">
           <DashboardHeader period="2024 - Full Year" />
 
+          <p role="status" className="sr-only">
+            {loading ? "Loading financial data." : error ? "" : "Financial data loaded."}
+          </p>
+
           {error ? (
-            <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive-foreground">
+            <div role="alert" lang="es" className="rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive-foreground">
               {error}
             </div>
           ) : null}
@@ -62,6 +66,10 @@ function App() {
             aria-label="Financial charts"
             className="grid grid-cols-1 gap-4 xl:grid-cols-2"
           >
+            <p id="chart-keyboard-instructions" className="sr-only">
+              Use Tab to move between charts, Left and Right arrow keys to explore
+              monthly values, and Escape to dismiss the tooltip.
+            </p>
             <IncomeOutcomeChart data={monthlyData} loading={loading} />
             <ProfitPercentChart data={monthlyData} loading={loading} />
           </section>

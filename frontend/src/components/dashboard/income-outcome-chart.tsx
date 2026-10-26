@@ -33,7 +33,7 @@ interface CustomTooltipProps {
 function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
   if (!active || !payload?.length) return null
   return (
-    <div className="rounded-lg border border-border bg-card px-4 py-3 shadow-lg text-sm">
+    <div role="status" aria-atomic="true" className="rounded-lg border border-border bg-card px-4 py-3 shadow-lg text-sm">
       <p className="font-semibold text-foreground mb-2">{label}</p>
       {payload.map((entry) => (
         <div key={entry.name} className="flex items-center gap-2 py-0.5">
@@ -76,7 +76,12 @@ export function IncomeOutcomeChart({ data, loading }: IncomeOutcomeChartProps) {
           </div>
         ) : (
           <ResponsiveContainer width="100%" height={280}>
-            <LineChart data={data} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
+            <LineChart
+              data={data}
+              aria-label="Income vs. Outcome"
+              aria-describedby="chart-keyboard-instructions"
+              margin={{ top: 4, right: 8, left: 0, bottom: 0 }}
+            >
               <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" strokeOpacity={0.6} />
               <XAxis
                 dataKey="month"
@@ -112,6 +117,7 @@ export function IncomeOutcomeChart({ data, loading }: IncomeOutcomeChartProps) {
                 name="outcome"
                 stroke="var(--chart-outcome)"
                 strokeWidth={2}
+                strokeDasharray="5 3"
                 dot={{ r: 3, fill: 'var(--chart-outcome)', strokeWidth: 0 }}
                 activeDot={{ r: 5, strokeWidth: 0 }}
               />

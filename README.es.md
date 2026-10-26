@@ -49,6 +49,18 @@ Si necesitas apuntar a otro backend, copia `frontend/.env.example` como `.env` y
 - Backend: http://localhost:8000
 - Documentación API: http://localhost:8000/docs
 
+## Accesibilidad
+
+El dashboard aplica la skill `accessibility`: los gráficos tienen nombres e
+instrucciones accesibles, sus tooltips anuncian valores y el foco de teclado usa
+un contorno de alto contraste. La serie de egresos usa una línea discontinua para
+no depender solo del color. Los estados de carga y error se anuncian sin mover el foco.
+
+Para comprobarlo, usa Tab y Mayús+Tab entre gráficos, las flechas izquierda/derecha
+para explorar meses y Escape para ocultar el tooltip. Repite la auditoría de
+Lighthouse Accessibility con datos cargados; una puntuación de 100 no garantiza
+conformidad WCAG ni sustituye las pruebas con lector de pantalla.
+
 ---
 
 Este y muchos otros proyectos son construidos por estudiantes como parte de los [Coding Bootcamps](https://4geeksacademy.com/) de 4Geeks Academy. Encuentra más acerca de los [cursos](https://4geeksacademy.com/es/comparar-programas) de [Ingeniería de IA](https://4geeksacademy.com/es/coding-bootcamps/ingenieria-ia), [Data Science & Machine Learning](https://4geeksacademy.com/es/coding-bootcamps/curso-datascience-machine-learning), [Ciberseguridad](https://4geeksacademy.com/es/coding-bootcamps/curso-ciberseguridad) y [Full-Stack Software Developer con IA](https://4geeksacademy.com/es/coding-bootcamps/programador-full-stack).

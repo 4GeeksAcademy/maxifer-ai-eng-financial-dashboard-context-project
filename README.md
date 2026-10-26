@@ -49,6 +49,18 @@ If you need to target a different backend origin, copy `frontend/.env.example` t
 - Backend: http://localhost:8000
 - API documentation: http://localhost:8000/docs
 
+## Accessibility
+
+The dashboard applies the `accessibility` skill: charts have accessible names and
+instructions, tooltips announce values, and keyboard focus uses a high-contrast
+outline. The outcome series uses a dashed line so it does not rely on color alone.
+Loading and error states are announced without moving focus.
+
+To check, use Tab and Shift+Tab between charts, Left/Right arrows to explore
+months, and Escape to dismiss the tooltip. Repeat the Lighthouse Accessibility
+audit with loaded data; a score of 100 does not guarantee WCAG conformance or
+replace screen reader testing.
+
 ---
 
 This and many other projects are built by students as part of the [Career Programs](https://4geeksacademy.com/compare-programs) at [4Geeks Academy](https://4geeksacademy.com). By [@marcogonzalo](https://github.com/marcogonzalo) and [other contributors](https://github.com/4GeeksAcademy/ai-eng-financial-dashboard-context-project/graphs/contributors). Find out more about [AI Engineering](https://4geeksacademy.com/en/coding-bootcamps/ai-engineering), [Data Science & Machine Learning](https://4geeksacademy.com/en/coding-bootcamps/data-science-ml), [Cybersecurity](https://4geeksacademy.com/en/coding-bootcamps/cybersecurity) and [Full-Stack Software Developer with AI](https://4geeksacademy.com/en/coding-bootcamps/full-stack-developer).
