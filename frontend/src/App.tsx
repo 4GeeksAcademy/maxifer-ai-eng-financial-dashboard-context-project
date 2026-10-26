@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { KPIRow } from "@/components/dashboard/kpi-row";
-import { IncomeOutcomeChart } from "@/components/dashboard/income-outcome-chart";
-import { ProfitPercentChart } from "@/components/dashboard/profit-percent-chart";
+import { ChartsLoading } from "@/components/dashboard/chart-card";
+import { ChartErrorBoundary } from "@/components/dashboard/chart-error-boundary";
 import {
   type FinancialMovement,
   type KPIMetrics,
@@ -11,6 +11,7 @@ import {
 import { computeKPIs, computeMonthlyData } from "@/lib/financial-utils";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
+const FinancialCharts = lazy(() => import("@/components/dashboard/financial-charts"));
 
 async function fetchFinancialData(): Promise<FinancialMovement[]> {
   const response = await fetch(`${API_BASE_URL}/api/metrics`);
@@ -70,8 +71,11 @@ function App() {
               Use Tab to move between charts, Left and Right arrow keys to explore
               monthly values, and Escape to dismiss the tooltip.
             </p>
-            <IncomeOutcomeChart data={monthlyData} loading={loading} />
-            <ProfitPercentChart data={monthlyData} loading={loading} />
+            <ChartErrorBoundary>
+              <Suspense fallback={<ChartsLoading />}>
+                <FinancialCharts data={monthlyData} loading={loading} />
+              </Suspense>
+            </ChartErrorBoundary>
           </section>
         </div>
       </div>

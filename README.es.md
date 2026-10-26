@@ -49,6 +49,25 @@ Si necesitas apuntar a otro backend, copia `frontend/.env.example` como `.env` y
 - Backend: http://localhost:8000
 - Documentación API: http://localhost:8000/docs
 
+## Rendimiento del frontend para despliegue
+
+La auditoría `vercel-react-best-practices` se aplica a esta SPA React + Vite, no a
+Next.js. Hay una sola página: su título y descripción están en `frontend/index.html`.
+No hay imágenes de contenido ni fuentes descargadas, por lo que `next/image` y
+`next/font` no aplican. El dashboard usa fuentes del sistema sin solicitudes externas.
+
+Los gráficos cargan en un chunk JavaScript separado mientras se muestran el
+encabezado y los KPIs. Los placeholders conservan los encabezados reales y los
+280px del área de gráficos; los KPIs conservan etiquetas y textos auxiliares para
+reducir saltos de diseño. Los errores de carga/renderizado de gráficos muestran
+una acción de recarga. El HTML aplica el tema oscuro antes de montar React.
+
+Desde `frontend`, ejecuta `npm ci`, `npm run build` y `npm run preview` para revisar
+la salida de producción. Configura el hosting para redirigir `/api` al backend o
+define `VITE_API_BASE_URL` antes del build; el proxy de desarrollo de Vite no forma
+parte del bundle productivo. Mide Lighthouse y CLS en esta preview de producción
+con la API disponible; un build correcto no equivale a una puntuación Lighthouse.
+
 ## Accesibilidad
 
 El dashboard aplica la skill `accessibility`: los gráficos tienen nombres e
