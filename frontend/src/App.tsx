@@ -44,42 +44,54 @@ function App() {
   }, []);
 
   return (
-    <main className="dark min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-8">
-          <DashboardHeader period="2024 - Full Year" />
+    <>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+      >
+        Skip to main content
+      </a>
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="dark min-h-screen bg-background text-foreground"
+      >
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+          <div className="flex flex-col gap-8">
+            <DashboardHeader period="2024 - Full Year" />
 
-          <p role="status" className="sr-only">
-            {loading ? "Loading financial data." : error ? "" : "Financial data loaded."}
-          </p>
-
-          {error ? (
-            <div role="alert" lang="es" className="rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive-foreground">
-              {error}
-            </div>
-          ) : null}
-
-          <section aria-label="Key performance indicators">
-            <KPIRow metrics={metrics} loading={loading} />
-          </section>
-
-          <section
-            aria-label="Financial charts"
-            className="grid grid-cols-1 gap-4 xl:grid-cols-2"
-          >
-            <p id="chart-keyboard-instructions" className="sr-only">
-              Use Tab to move between charts, Left and Right arrow keys to explore
-              monthly values, and Escape to dismiss the tooltip.
+            <p role="status" className="sr-only">
+              {loading ? "Loading financial data." : error ? "" : "Financial data loaded."}
             </p>
-            <ChartErrorBoundary>
-              <Suspense fallback={<ChartsLoading />}>
-                <FinancialCharts data={monthlyData} loading={loading} />
-              </Suspense>
-            </ChartErrorBoundary>
-          </section>
+
+            {error ? (
+              <div role="alert" lang="es" className="rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive-foreground">
+                {error}
+              </div>
+            ) : null}
+
+            <section aria-label="Key performance indicators">
+              <KPIRow metrics={metrics} loading={loading} />
+            </section>
+
+            <section
+              aria-label="Financial charts"
+              className="grid grid-cols-1 gap-4 xl:grid-cols-2"
+            >
+              <p id="chart-keyboard-instructions" className="sr-only">
+                Use Tab to move between charts, Left and Right arrow keys to explore
+                monthly values, and Escape to dismiss the tooltip.
+              </p>
+              <ChartErrorBoundary>
+                <Suspense fallback={<ChartsLoading />}>
+                  <FinancialCharts data={monthlyData} loading={loading} />
+                </Suspense>
+              </ChartErrorBoundary>
+            </section>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
 

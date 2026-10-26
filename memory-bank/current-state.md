@@ -96,3 +96,9 @@ Validaciones manuales conectadas al codigo:
 - Revisar `http://localhost:8000/docs` para confirmar los endpoints FastAPI expuestos.
 
 No se ejecutaron comandos de test o build durante la generacion de este memory bank; la validacion realizada fue por inspeccion de archivos y trazabilidad con el codigo real.
+
+## Skill adicional aplicada
+
+- Se busco con `npx skills find performance` y `npx skills find accessibility`. Se agrego `web-design-guidelines` de `vercel-labs/agent-skills`, ademas de las skills de React y accesibilidad que ya estaban presentes.
+- Se eligio porque sus guias de interfaz incluyen accesibilidad de teclado y recomiendan enlaces para saltar al contenido principal, una mejora pertinente para este dashboard SPA.
+- Se aplico agregando un enlace "Skip to main content" visible al recibir foco y un destino enfocable en el `<main>` de `frontend/src/App.tsx`.
